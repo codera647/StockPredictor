@@ -50,6 +50,17 @@ def parser() -> argparse.ArgumentParser:
     prepare.add_argument("--archive-root", type=Path, default=Path("data/archive"))
     prepare.add_argument("--summary-dir", type=Path, default=Path("artifacts/dataset"))
     prepare.add_argument("--no-upload", action="store_true")
+    train = sub.add_parser("train", help="Train, calibrate and evaluate the daily research bundle")
+    dataset = train.add_mutually_exclusive_group()
+    dataset.add_argument("--manifest", help="Private prepared dataset manifest key")
+    dataset.add_argument(
+        "--manifest-from-summary", type=Path, default=Path("artifacts/dataset/summary.json")
+    )
+    train.add_argument("--config", type=Path, default=Path("configs/training.daily.json"))
+    train.add_argument("--env-file", type=Path, default=Path(".env"))
+    train.add_argument("--archive-root", type=Path, default=Path("data/archive"))
+    train.add_argument("--summary-dir", type=Path, default=Path("artifacts/training"))
+    train.add_argument("--no-upload", action="store_true")
     return root
 
 
@@ -61,6 +72,10 @@ def main() -> int:
         logging.getLogger(name).setLevel(logging.WARNING)
     if args.command == "prepare":
         return preparation_main(args)
+    if args.command == "train":
+        from stock_predictor.training.pipeline import training_main
+
+        return training_main(args)
     args.summary_dir.mkdir(parents=True, exist_ok=True)
     (args.summary_dir / "summary.json").write_text(
         json.dumps({"status": "running", "sources": args.sources, "training_ready": False}),

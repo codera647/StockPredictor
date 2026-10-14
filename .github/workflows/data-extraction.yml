@@ -24,18 +24,22 @@ on:
           - all
           - daily
         default: all
+      train_models:
+        description: Continue through training and frozen chronological evaluation
+        type: boolean
+        default: true
 
 permissions:
   contents: read
 
 concurrency:
-  group: stock-predictor-data-extraction
+  group: stock-predictor-daily-pipeline
   cancel-in-progress: false
 
 jobs:
   extract:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 300
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -91,7 +95,19 @@ jobs:
           S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
           S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
         run: uv run --frozen stock-predictor prepare --manifest-from-summary artifacts/extraction/summary.json
+      - name: Train, calibrate and evaluate prepared models
+        if: inputs.train_models
+        env:
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+          S3_ENDPOINT_URL: https://br-lingering-shape-b8lz1937.storage.c-14.us-east-1.aws.neon.tech
+          S3_REGION: us-east-1
+          S3_BUCKET_NAME: stock-predictor-artifacts
+          S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
+          S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+        run: uv run --frozen stock-predictor train --manifest-from-summary artifacts/dataset/summary.json
       - name: Attach non-secret extraction reports
+        # Reports persist even if training or dataset preparation fails.
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
@@ -99,5 +115,6 @@ jobs:
           path: |
             artifacts/extraction/*.json
             artifacts/dataset/*.json
+            artifacts/training/*.json
           if-no-files-found: ignore
           retention-days: 14

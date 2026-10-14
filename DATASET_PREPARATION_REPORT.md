@@ -2,7 +2,7 @@
 
 Completed on 2026-10-14 using the checksummed full-source extraction and the shared preparation command. All generated tables are saved locally under `data/archive/staging/datasets/` and in the private S3-compatible archive. Secrets and market datasets are excluded from GitHub.
 
-**Research training dataset prepared; production certification remains false. No model has been trained or deployed.**
+**Research training dataset prepared; production certification remains false. At the time of this preparation run, no model was trained or deployed. The subsequent training run is documented in [MODEL_TRAINING_REPORT.md](MODEL_TRAINING_REPORT.md).**
 
 ## Canonical cleaning
 

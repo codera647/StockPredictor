@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "bundle_version": "daily-five-session-lightgbm-v1",
+  "seed": 647,
+  "threads": 4,
+  "quantiles": [0.1, 0.5, 0.9],
+  "max_rounds": 500,
+  "early_stopping_rounds": 50,
+  "learning_rate": 0.04,
+  "lightgbm_candidates": [
+    {"name": "compact", "num_leaves": 15, "max_depth": 4, "min_data_in_leaf": 400, "lambda_l2": 5.0},
+    {"name": "moderate", "num_leaves": 31, "max_depth": 5, "min_data_in_leaf": 200, "lambda_l2": 10.0}
+  ],
+  "ridge_alphas": [1.0, 10.0, 100.0],
+  "logistic_cs": [0.1, 1.0],
+  "arima_orders": [0, 1],
+  "arima_minimum_sessions": 60,
+  "nominal_coverage": 0.8,
+  "temperature_bounds": [0.25, 4.0],
+  "walk_forward": [
+    {"inner_validation_start": "2020-07-01", "evaluation_start": "2021-01-04", "evaluation_end_exclusive": "2021-07-01"},
+    {"inner_validation_start": "2021-07-01", "evaluation_start": "2022-01-03", "evaluation_end_exclusive": "2022-07-01"}
+  ],
+  "bootstrap_repetitions": 200,
+  "bootstrap_block_sessions": 20,
+  "minimum_relative_improvement": 0.01,
+  "coverage_tolerance": 0.05,
+  "production_ready": false
+}
