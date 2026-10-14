@@ -95,7 +95,7 @@ Make each step restartable from its manifest/checkpoint. Reuse cached immutable 
 
 Local tests and Actions use the same shared Python feature engine and versioned datasets/model artifacts. Initial runs require a historical backfill; subsequent after-close runs incrementally fetch data and infer using approved weights. Retraining is an offline candidate cycle, not an operation performed for every daily forecast or page refresh. Vercel serves persisted forecasts and metrics; heavy training/backfills do not run inside a browser request or Vercel build.
 
-Vercel is the chosen application host. The StockPredictor PostgreSQL project is provisioned through Neon in the connected Free organization: `hidden-butterfly-59546787`, production branch `br-lingering-shape-b8lz1937`, database `stock_predictor`, AWS US East 1, PostgreSQL 17. Runtime, pipeline and migration connections are saved and verified in the private local `.env`; restricted SQL roles are created, with specific table grants pending application schema implementation. Object-storage provider selection remains open. Free data does not guarantee unlimited free infrastructure or public redistribution. Vercel and Actions ephemeral disks are not durable archives. Check repository-plan Actions quotas before enabling recurring training.
+Vercel is the chosen application host. The StockPredictor PostgreSQL project is provisioned through Neon in the connected Free organization: `hidden-butterfly-59546787`, production branch `br-lingering-shape-b8lz1937`, database `stock_predictor`, AWS US East 1, PostgreSQL 17. Runtime, pipeline and migration connections are saved and verified in the private local `.env`; restricted SQL roles are created, with specific table grants pending application schema implementation. Archives use the private Neon Object Storage bucket stock-predictor-artifacts on the production branch, with storage-only credentials and a 5 GB Free-plan allowance. All five S3 variables are saved in the private local .env. Free data does not guarantee unlimited free infrastructure or public redistribution. Vercel and Actions ephemeral disks are not durable archives. Check repository-plan Actions quotas before enabling recurring training.
 
 ### Planned GitHub Actions workflows
 
@@ -181,7 +181,7 @@ Add authenticated snapshot/stream endpoints during the live extension. Long-runn
 - Market-data access: free Alpaca Basic account and keys, confirmed historical SIP access, action coverage and permitted display/redistribution. FRED free key is needed only when macro features begin. Credentials should be configured on the backend, not pasted into chat.
 - Initial engineering universe and benchmark/sector mapping.
 - Historical security and delisting coverage: required before claiming broad-universe results.
-- Neon provisioning and local database URLs: complete. Application schema/table grants, scoped Vercel/Actions secret configuration, object-storage selection and authentication remain to be implemented. Deployment target is Vercel via GitHub Actions.
+- Neon database/storage provisioning and local credentials: complete. Application schema/table grants, scoped Vercel/Actions secret configuration, archive pipeline implementation and authentication remain to be implemented. Deployment target is Vercel via GitHub Actions.
 
 Use synthetic fixtures only for engineering tests or an explicitly labeled demonstration. Publish no real forecast, live quote, probability or accuracy score until its underlying data/model/evaluation exists.
 

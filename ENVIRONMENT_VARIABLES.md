@@ -1,6 +1,6 @@
 # Environment variables
 
-Status: configuration contract; application code does not exist yet. `.env` and `.env.example` contain the same 34 names, with 18 fixed URLs/settings/project IDs prefilled. The template's 16 credential/contact/service entries remain blank; the private `.env` now also contains the three verified Neon database connections. Other user-entered values are preserved. Only `.env.example` may be committed. Names are deliberate project conventions except where noted as provider-standard. Additional provider-specific variables will be added only if the selected implementation requires them.
+Status: configuration contract; application code does not exist yet. `.env` and `.env.example` contain the same 34 names, with 21 fixed URLs/settings/project IDs/storage defaults prefilled. The template's 13 credential/contact/service entries remain blank; the private `.env` contains the three Neon database connections and the two storage credential fields. Other user-entered values are preserved. Only `.env.example` may be committed. Names are deliberate project conventions except where noted as provider-standard. Additional provider-specific variables will be added only if the selected implementation requires them.
 
 ## Where values belong
 
@@ -33,7 +33,7 @@ Nasdaq source definition: https://www.nasdaqtrader.com/trader.aspx?id=symboldird
 
 ## Persistence variables
 
-Database provisioned through the Neon connector in the connected Free organization: StockPredictor (`hidden-butterfly-59546787`), AWS US East 1, PostgreSQL 17, branch `production` (`br-lingering-shape-b8lz1937`), database `stock_predictor`. Compute is capped at 0.25 CU with the Free plan's default suspension policy. One database has separate roles for runtime, pipeline writes and schema migrations. The private local `.env` now contains pooled runtime/writer connections and a direct migration connection, preserving Neon's TLS options. All three authenticated successfully against the expected role/database. Object-storage provider selection remains separate. Vercel function disk and Actions runner disk are not durable archives.
+Database provisioned through the Neon connector in the connected Free organization: StockPredictor (`hidden-butterfly-59546787`), AWS US East 1, PostgreSQL 17, branch `production` (`br-lingering-shape-b8lz1937`), database `stock_predictor`. Compute is capped at 0.25 CU with the Free plan's default suspension policy. One database has separate roles for runtime, pipeline writes and schema migrations. The private local `.env` now contains pooled runtime/writer connections and a direct migration connection, preserving Neon's TLS options. All three authenticated successfully against the expected role/database. Neon Object Storage on this same branch is the chosen archive provider. Vercel function disk and Actions runner disk are not durable archives.
 
 Created SQL roles: `app_runtime` and `pipeline_writer`, with LOGIN but without superuser, CREATEDB, CREATEROLE, replication, BYPASSRLS or neon_superuser membership. They have database CONNECT and public-schema USAGE only. Their exact table grants will be added with the application schema: runtime forecasting/metric reads and permitted application-state operations, and pipeline ingestion/forecast writes. `schema_migrator` is the controlled administrative owner created with the project. The non-secret metadata and bootstrap SQL are in `infra/database/`; passwords are stored only in the private `.env`.
 
@@ -44,11 +44,17 @@ For subsequent setup, reuse this project and branch and the existing private dat
 | `DATABASE_URL` | TLS PostgreSQL connection URL for the API's restricted application role; pooled when appropriate | Deployed daily MVP | Vercel API Secret; dashboard only if auth requires DB access |
 | `DATABASE_WRITE_URL` | TLS PostgreSQL connection URL for the ingestion/forecast writer role | Daily pipeline | Actions Secrets only |
 | `DATABASE_MIGRATION_URL` | Direct PostgreSQL connection URL for controlled schema migrations | Initial setup / migrations | Protected Actions Secrets only |
-| `S3_ENDPOINT_URL` | Selected object store's S3-compatible API endpoint | Persistent raw/dataset/model archives | Actions Variables |
-| `S3_REGION` | Region identifier required by the selected provider's S3 API | Archive integration | Actions Variables |
-| `S3_BUCKET_NAME` | Private archive bucket name | Archive integration | Actions Variables |
-| `S3_ACCESS_KEY_ID` | Scoped archive access-key ID | Archive integration | Actions Secrets |
-| `S3_SECRET_ACCESS_KEY` | Corresponding scoped archive secret | Archive integration | Actions Secrets |
+| `S3_ENDPOINT_URL` | https://br-lingering-shape-b8lz1937.storage.c-14.us-east-1.aws.neon.tech | Persistent raw/dataset/model archives | Actions Variables |
+| `S3_REGION` | us-east-1 | Archive integration | Actions Variables |
+| `S3_BUCKET_NAME` | stock-predictor-artifacts | Archive integration | Actions Variables |
+| `S3_ACCESS_KEY_ID` | Full Neon branch credential token ID; saved privately | Archive integration | Actions Secrets |
+| `S3_SECRET_ACCESS_KEY` | Corresponding Neon S3 secret; saved privately | Archive integration | Actions Secrets |
+
+The archive bucket is private, and its branch-scoped credential permits storage read/write only. No Functions or AI Gateway scope was granted. Neon Free includes 5 GB of Object Storage; keep compressed archives and artifacts within that allowance. AWS discovery exposed no callable S3 account-management connector here, so account-specific AWS free eligibility was not assumed.
+
+These five names are project conventions: map them explicitly into the S3 client. Neon requires path-style addressing and SigV4. For boto3, pass endpoint_url, region_name, aws_access_key_id and aws_secret_access_key explicitly, with Config(signature_version="s3v4", s3={"addressing_style":"path"}). Metadata lives in infra/storage/neon-bucket.json; access keys and secrets are excluded.
+
+Reference: [Neon Free storage allowance](https://neon.com/pricing).
 
 The daily Vercel API reads persisted forecasts and metrics from PostgreSQL. It does not need archive-write credentials or the training dependencies. Serving file exports later may require a separate read-only storage credential; add that contract then rather than granting the live API archive-write access now.
 
@@ -109,7 +115,7 @@ Both Vercel domain records are verified and belong to the intended project IDs. 
 
 - Daily collection: `APCA_API_KEY_ID`, `APCA_API_SECRET_KEY`, `SEC_USER_AGENT`.
 - Database: `DATABASE_URL`, `DATABASE_WRITE_URL`, `DATABASE_MIGRATION_URL` are configured and verified locally; keep these entries blank in the committed template.
-- Object storage: `S3_ENDPOINT_URL`, `S3_REGION`, `S3_BUCKET_NAME`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`.
+- Object storage: all five S3 variables are configured locally. The endpoint/region/bucket defaults are in the template; access-key ID and secret remain blank in the committed template.
 - Application signing: `AUTH_SECRET`.
 - Actions deployment: `VERCEL_TOKEN`.
 - Later/conditional: `FRED_API_KEY`, `VERCEL_AUTOMATION_BYPASS_SECRET`, `REDIS_URL`.

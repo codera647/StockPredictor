@@ -1,0 +1,25 @@
+{
+  "provider": "neon-object-storage",
+  "project_id": "hidden-butterfly-59546787",
+  "branch_id": "br-lingering-shape-b8lz1937",
+  "bucket_name": "stock-predictor-artifacts",
+  "access_level": "private",
+  "endpoint": "https://br-lingering-shape-b8lz1937.storage.c-14.us-east-1.aws.neon.tech",
+  "region": "us-east-1",
+  "force_path_style": true,
+  "signature_version": "s3v4",
+  "credential_name": "stock-predictor-pipeline-storage",
+  "credential_scopes": [
+    "storage:read",
+    "storage:write"
+  ],
+  "free_storage_allowance_gb_at_setup": 5,
+  "usage": [
+    "immutable-raw-snapshots",
+    "versioned-datasets",
+    "model-artifacts",
+    "evaluation-reports"
+  ],
+  "credentials": "private local .env and protected Actions Secrets; never commit keys"
+}
+
