@@ -1,6 +1,6 @@
 # Daily dataset cleaning and feature plan
 
-Status: dataset cleaning/features remain a design specification. The extraction implementation now archives provider observations and reports coverage separately; no training-ready dataset or model is claimed. See [DATA_EXTRACTION.md](DATA_EXTRACTION.md).
+Status: the daily research bundle is implemented in the shared preparation pipeline. See [commands and implemented policies](DATASET_PREPARATION.md) and [measured run results](DATASET_PREPARATION_REPORT.md). Historical availability and security identities are research reconstructions; production certification and model training remain outstanding. The broader identity/evidence requirements below remain targets where the implemented research scope does not yet establish them.
 
 Scope: free-source US equity daily MVP, five-trading-session forecast, using the expanded architecture and `BUILD_PLAN.md`. This document specifies the dataset stage of the same build/train/test/deploy pipeline; it does not introduce a separate prototype.
 
@@ -102,9 +102,9 @@ RSI smoothing must use identical initialization and action handling in training 
 
 | Columns | Count | Definition |
 |---|---:|---|
-| `relative_volume_20` | 1 | `V_t / mean(V over preceding 20 sessions, excluding t)`; requires 21 valid volume observations |
-| `log_dollar_volume_20` | 1 | `ln(1 + mean(C_raw * V_raw over last 20 sessions))`; USD units and SIP feed recorded |
-| `volume_trend_5_20` | 1 | `mean(V over last 5 sessions) / mean(V over last 20 sessions) - 1`, both ending at `t` |
+| `relative_volume_20_lag1` | 1 | `V_(t-1) / mean(V over 20 sessions preceding t-1, excluding t-1)` |
+| `log_dollar_volume_20_lag1` | 1 | `ln(1 + mean(C_raw * V_raw over 20 sessions ending t-1))`; USD units and SIP feed recorded |
+| `volume_trend_5_20_lag1` | 1 | `mean(V over 5 sessions) / mean(V over 20 sessions) - 1`, both ending at `t-1` |
 
 Retain the raw arithmetic `dollar_volume_20` as a derived eligibility/audit value; only its named logarithmic transformation is a core model input. Close times volume is a daily dollar-volume proxy, not exact traded notional.
 

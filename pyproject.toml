@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Reproducible free-source daily equity forecasting pipeline"
 requires-python = ">=3.13,<3.14"
 dependencies = [
+  "numpy>=2,<3",
   "httpx>=0.28,<0.29",
   "boto3>=1.40,<2",
   "exchange-calendars>=4.11,<5",

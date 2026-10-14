@@ -2,12 +2,14 @@
 
 Daily probabilistic equity forecasting with reproducible datasets, immutable forecasts, and Vercel deployment through GitHub Actions.
 
-Status: the Python extraction pipeline covers Alpaca bars/actions, Nasdaq/SEC directories, SEC facts/filing metadata and selected originals, FRED/ALFRED vintages, recent GDELT DOC/GKG metadata and prospective company announcements. It has immutable private archives, resumable requests, a frozen 50-stock + SPY universe, Parquet staging and coverage reports. The daily historical backfill completed. Feature generation, application tables, training and Vercel deployment are subsequent stages.
+Status: the Python pipeline extracts all planned source families and prepares the daily research dataset: cleaning, 34 shared trailing features, five-session labels, purged train/validation/calibration/test blocks and separate cleaned evidence. Immutable private archives retain source snapshots, checksums and versioned manifests. Historical availability and security identity are reconstructed research assumptions. Application tables, model training and Vercel deployment are subsequent stages.
 
 - [Build and deployment plan](BUILD_PLAN.md)
 - [Data extraction commands, checkpoints and GitHub Actions setup](DATA_EXTRACTION.md)
 - [Measured collection results and source coverage gaps](DATA_COLLECTION_REPORT.md)
 - [Dataset cleaning and feature specification](DATASET_FEATURE_PLAN.md)
+- [Implemented preparation commands and policies](DATASET_PREPARATION.md)
+- [Measured prepared-dataset results](DATASET_PREPARATION_REPORT.md)
 - [Environment variables and service ownership](ENVIRONMENT_VARIABLES.md)
 - [Environment template with fixed defaults](.env.example)
 

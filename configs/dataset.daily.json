@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "feature_version": "daily-price-spy-lagged-volume-v1",
+  "target_version": "five-session-price-return-v1",
+  "benchmark": "SPY",
+  "horizon_sessions": 5,
+  "eligibility_sessions": 252,
+  "indicator_warmup_sessions": 61,
+  "minimum_dollar_volume_20": 10000000,
+  "direction_epsilon": 0.005,
+  "direction_volatility_multiplier": 0.5,
+  "split_ratio_tolerance": 0.001,
+  "suspicious_log_jump": 0.4,
+  "volume_policy": "previous_completed_provider_day",
+  "historical_availability_policy": "research_reconstruction_close_plus_30m_lagged_volume",
+  "identity_policy": "fixed_symbol_research_with_action_boundaries",
+  "validation_start": "2023-10-16",
+  "calibration_start": "2024-10-14",
+  "test_start": "2025-10-14",
+  "production_ready": false
+}

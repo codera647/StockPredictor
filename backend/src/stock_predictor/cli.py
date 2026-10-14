@@ -7,6 +7,7 @@ from pathlib import Path
 
 from stock_predictor.calendar import latest_completed_session
 from stock_predictor.config import PipelineError, Settings, load_universe
+from stock_predictor.datasets.pipeline import preparation_main
 from stock_predictor.evidence import full_report, run_evidence
 from stock_predictor.extraction import run_extraction
 from stock_predictor.storage.archive import Archive, digest
@@ -38,6 +39,17 @@ def parser() -> argparse.ArgumentParser:
     extract.add_argument(
         "--refresh", action="store_true", help="Fetch new revisions of completed requests"
     )
+    prepare = sub.add_parser("prepare", help="Clean, label, build features and purged time splits")
+    manifest = prepare.add_mutually_exclusive_group()
+    manifest.add_argument("--manifest", help="Private full or daily extraction manifest key")
+    manifest.add_argument(
+        "--manifest-from-summary", type=Path, default=Path("artifacts/extraction/summary.json")
+    )
+    prepare.add_argument("--config", type=Path, default=Path("configs/dataset.daily.json"))
+    prepare.add_argument("--env-file", type=Path, default=Path(".env"))
+    prepare.add_argument("--archive-root", type=Path, default=Path("data/archive"))
+    prepare.add_argument("--summary-dir", type=Path, default=Path("artifacts/dataset"))
+    prepare.add_argument("--no-upload", action="store_true")
     return root
 
 
@@ -47,6 +59,8 @@ def main() -> int:
     # Third-party HTTP debug logging can disclose sensitive URLs/headers; keep it quiet.
     for name in ("httpx", "httpcore", "botocore", "boto3", "urllib3"):
         logging.getLogger(name).setLevel(logging.WARNING)
+    if args.command == "prepare":
+        return preparation_main(args)
     args.summary_dir.mkdir(parents=True, exist_ok=True)
     (args.summary_dir / "summary.json").write_text(
         json.dumps({"status": "running", "sources": args.sources, "training_ready": False}),

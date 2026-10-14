@@ -1,6 +1,6 @@
 # Stock Predictor build plan
 
-Status: the shared extraction pipeline implements all planned free-source families: Alpaca, Nasdaq, SEC facts/filings, FRED/ALFRED, GDELT and official company announcements, with explicit per-source history windows and limits. Historical daily and evidence collection have run, with external news/IR gaps retained in reports. Locked dependencies, private archives/checkpoints, manifests/reports and the manual GitHub Actions workflow use the same code. See [DATA_EXTRACTION.md](DATA_EXTRACTION.md) and [measured collection results](DATA_COLLECTION_REPORT.md). Cleaning/features, database schema, training, application and deployment remain subsequent stages.
+Status: the shared extraction pipeline implements all planned free-source families: Alpaca, Nasdaq, SEC facts/filings, FRED/ALFRED, GDELT and official company announcements, with explicit per-source history windows and limits. Historical daily and evidence collection have run, with external news/IR gaps retained in reports. Locked dependencies, private archives/checkpoints, manifests/reports and the manual GitHub Actions workflow use the same code. See [DATA_EXTRACTION.md](DATA_EXTRACTION.md) and [measured collection results](DATA_COLLECTION_REPORT.md). The shared cleaning/feature/label pipeline and purged chronological research datasets are now implemented and run; see [dataset preparation](DATASET_PREPARATION.md). Database schema, training, application and deployment remain subsequent stages.
 
 User decisions: daily forecasting MVP first, live intraday forecasts later; no paid data APIs. Build, train, test and deploy through one reproducible pipeline using the same code and artifacts. Prepare the plan before implementing.
 
@@ -21,7 +21,7 @@ Start with the documented five-trading-session daily forecasting MVP. Keep inter
 
 The first usable release should let a user select a supported company, inspect its observed prices, view the stored median and estimated 80% forecast interval at an explicit target session, inspect direction probabilities and historical evaluation, and browse forecasts exactly as originally issued.
 
-Use a small, explicitly documented engineering universe initially. Current surviving company examples must not be represented as a historically unbiased universe. Expand toward the blueprint's 50â€“100 securities only when data quality and coverage permit.
+Use a small, explicitly documented engineering universe initially. Current surviving company examples must not be represented as a historically unbiased universe. Expand toward the blueprint's 50–100 securities only when data quality and coverage permit.
 
 ## Proposed stack
 
