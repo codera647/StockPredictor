@@ -1,6 +1,6 @@
 # Daily dataset cleaning and feature plan
 
-Status: design only. No dataset has been downloaded or cleaned and no model has been trained.
+Status: dataset cleaning/features remain a design specification. The extraction implementation now archives provider observations and reports coverage separately; no training-ready dataset or model is claimed. See [DATA_EXTRACTION.md](DATA_EXTRACTION.md).
 
 Scope: free-source US equity daily MVP, five-trading-session forecast, using the expanded architecture and `BUILD_PLAN.md`. This document specifies the dataset stage of the same build/train/test/deploy pipeline; it does not introduce a separate prototype.
 
@@ -28,6 +28,8 @@ One feature row represents one stable instrument at one after-close forecast cut
 | Actions | Separate action records with event ID/type, split ratio or cash amount, announcement/effective/available timestamps, availability method and revision |
 
 Derived OHLCV uses a verified split factor and a named adjustment version. Missing action verification must not be represented by an automatically assumed identity split factor.
+
+Provider timing finding: Alpaca daily volume includes extended-hours prints. Its retrospective `1Day` volume is not regular-session-only and must not be treated as fully available at the close +30-minute cutoff. Extraction marks this scope explicitly and records observed retrieval availability. The feature stage must select and evaluate a cutoff-consistent volume convention before fitting the three liquidity features; the same convention must be used at inference. See [provider aggregation rules](https://docs.alpaca.markets/us/docs/market-data-faq).
 
 Feature-row metadata includes `instrument_id`, `session_date`, `cutoff_at`, `feature_version`, `dataset_version`, `input_snapshot_id`, `max_input_available_at` and `readiness_status`. IDs, ticker strings, hashes, timestamps and quality status are audit fields, not default predictive inputs. Raw price/volume levels are retained for charts and checks; the initial model primarily uses relative quantities.
 
@@ -170,4 +172,3 @@ Before training, write a machine-readable and human-readable report containing c
 Required checks: no nonfinite model values other than declared missing inputs; no feature source timestamp after cutoff; no silent session compression; no cross-stock rolling windows; no inconsistent split basis; no immature fitting labels; no overlapping label intervals across fitting/evaluation boundaries; immutable raw/feature versions; and identical feature definitions in training/inference. Unsupported coverage or schema blocks the pipeline with explicit reasons.
 
 Artifacts: immutable raw snapshots, versioned canonical bars/actions, feature and label Parquet files, the dataset manifest, the quality report, and later the fold-specific fitted preprocessing artifacts bundled with their models. Deploy from those same versioned artifacts.
-

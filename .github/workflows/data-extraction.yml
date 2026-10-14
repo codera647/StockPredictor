@@ -1,0 +1,75 @@
+name: Data extraction
+
+on:
+  workflow_dispatch:
+    inputs:
+      start:
+        description: Inclusive historical start (YYYY-MM-DD)
+        required: true
+        default: '2016-01-04'
+      end:
+        description: Inclusive end; blank selects the latest session after close +30 minutes
+        required: false
+      symbols:
+        description: Optional comma-separated subset; blank selects 50 stocks plus SPY
+        required: false
+      refresh:
+        description: Refetch completed partitions as new immutable snapshots
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: stock-predictor-data-extraction
+  cancel-in-progress: false
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.13'
+      - name: Install locked dependencies
+        run: |
+          python -m pip install uv==0.13.1
+          uv sync --frozen
+      - name: Check extraction implementation
+        run: |
+          uv run --frozen ruff check backend
+          uv run --frozen pytest -q
+      - name: Extract and archive actual source data
+        env:
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+          S3_ENDPOINT_URL: https://br-lingering-shape-b8lz1937.storage.c-14.us-east-1.aws.neon.tech
+          S3_REGION: us-east-1
+          S3_BUCKET_NAME: stock-predictor-artifacts
+          S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
+          S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+          EXTRACT_START: ${{ inputs.start }}
+          EXTRACT_END: ${{ inputs.end }}
+          EXTRACT_SYMBOLS: ${{ inputs.symbols }}
+          EXTRACT_REFRESH: ${{ inputs.refresh }}
+        shell: bash
+        run: |
+          args=(--start "$EXTRACT_START")
+          if [[ -n "$EXTRACT_END" ]]; then args+=(--end "$EXTRACT_END"); fi
+          if [[ -n "$EXTRACT_SYMBOLS" ]]; then args+=(--symbols "$EXTRACT_SYMBOLS"); fi
+          if [[ "$EXTRACT_REFRESH" == "true" ]]; then args+=(--refresh); fi
+          uv run --frozen stock-predictor extract "${args[@]}"
+      - name: Attach non-secret extraction reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: extraction-report-${{ github.run_id }}
+          path: artifacts/extraction/*.json
+          if-no-files-found: ignore
+          retention-days: 14

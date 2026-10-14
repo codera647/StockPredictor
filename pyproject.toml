@@ -1,0 +1,36 @@
+[project]
+name = "stock-predictor"
+version = "0.1.0"
+description = "Reproducible free-source daily equity forecasting pipeline"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  "httpx>=0.28,<0.29",
+  "boto3>=1.40,<2",
+  "exchange-calendars>=4.11,<5",
+  "pandas>=2.3,<4",
+  "pyarrow>=21,<25",
+  "python-dotenv>=1.1,<2",
+]
+
+[project.scripts]
+stock-predictor = "stock_predictor.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "ruff>=0.13,<1"]
+
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["backend/src/stock_predictor"]
+
+[tool.pytest.ini_options]
+testpaths = ["backend/tests"]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]

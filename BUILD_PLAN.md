@@ -1,6 +1,6 @@
 # Stock Predictor build plan
 
-Status: planning only; implementation has not started.
+Status: data extraction implementation started. The shared Python collector, locked dependencies, versioned engineering universe, private archives/checkpoints and manual GitHub Actions extraction workflow are implemented. See [DATA_EXTRACTION.md](DATA_EXTRACTION.md). Cleaning/features, database schema, training, application and deployment remain subsequent stages.
 
 User decisions: daily forecasting MVP first, live intraday forecasts later; no paid data APIs. Build, train, test and deploy through one reproducible pipeline using the same code and artifacts. Prepare the plan before implementing.
 
@@ -21,7 +21,7 @@ Start with the documented five-trading-session daily forecasting MVP. Keep inter
 
 The first usable release should let a user select a supported company, inspect its observed prices, view the stored median and estimated 80% forecast interval at an explicit target session, inspect direction probabilities and historical evaluation, and browse forecasts exactly as originally issued.
 
-Use a small, explicitly documented engineering universe initially. Current surviving company examples must not be represented as a historically unbiased universe. Expand toward the blueprint's 50–100 securities only when data quality and coverage permit.
+Use a small, explicitly documented engineering universe initially. Current surviving company examples must not be represented as a historically unbiased universe. Expand toward the blueprint's 50â€“100 securities only when data quality and coverage permit.
 
 ## Proposed stack
 
@@ -188,4 +188,3 @@ Use synthetic fixtures only for engineering tests or an explicitly labeled demon
 ## Completion definition
 
 The daily MVP is complete when real permitted historical data flows through validation, a reproducible chronological evaluation and an approved model into an immutable forecast ledger, and the authenticated dashboard displays forecasts, uncertainty, versions, history and failure states correctly. The full blueprint additionally requires the live/intraday, paper-trading and evidence milestones above.
-

@@ -1,0 +1,424 @@
+{
+  "schema_version": 1,
+  "universe_version": "daily-engineering-v1",
+  "market": "US",
+  "calendar": "XNYS",
+  "benchmark_symbol": "SPY",
+  "selected_at": "2026-10-14",
+  "symbol_mapping": "disabled_asof_dash",
+  "limitations": [
+    "Fixed current-survivor engineering universe; not a historical index membership dataset.",
+    "Instrument IDs identify configured securities provisionally; ticker reuse/name-change histories require verification.",
+    "Current exchange and issuer mapping do not establish historical metadata."
+  ],
+  "instruments": [
+    {
+      "instrument_id": "65807227-9256-554a-930b-e34c0e25be64",
+      "symbol": "AAPL",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "0118986f-4c92-57d9-9027-6a8bfbf6c6a1",
+      "symbol": "MSFT",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "05b6f0ce-ebc0-52a7-ac12-2b5e97e46527",
+      "symbol": "NVDA",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "8cb80139-b688-5149-b8cc-67d85cea2128",
+      "symbol": "AMZN",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "3c16dd30-4503-5418-9351-07f250d2c190",
+      "symbol": "GOOGL",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "7538177e-b31f-5879-ba09-4e11653b7ab6",
+      "symbol": "TSLA",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "465a8881-ac7f-5b15-9433-73aa7b195624",
+      "symbol": "AVGO",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "5f553aa4-f837-5774-b95e-fd2f6a60c158",
+      "symbol": "ORCL",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "05d63c95-721e-5a4d-b4da-89483fa0d79b",
+      "symbol": "CRM",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "34996576-edcd-57c5-bbef-b0080495a0cb",
+      "symbol": "ADBE",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "babcc833-1883-56bf-9968-e7223f9e31c3",
+      "symbol": "INTC",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "5266d0c6-e9c1-5998-a81d-c409fcd25433",
+      "symbol": "AMD",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "c821ecda-1ce7-5bbe-89cc-2d8a3f819edc",
+      "symbol": "CSCO",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "54fb2edf-3be4-5170-8dc1-e8d759491aaa",
+      "symbol": "IBM",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "135423df-61d6-5974-87e4-58f9b42f1bfc",
+      "symbol": "QCOM",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "84fd9943-dda0-56ad-984e-6546a8cdd838",
+      "symbol": "TXN",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "499885ae-0e04-5f78-9c0e-fa9f395af52d",
+      "symbol": "JPM",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "8fa9a4ad-690b-5237-8091-33448505c101",
+      "symbol": "BAC",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "ec649a7f-2226-5d9f-a49f-9fb17e7ec06c",
+      "symbol": "WFC",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "95ed2770-8783-5b6f-a598-abc7c3dca1c2",
+      "symbol": "GS",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "48f4b86f-7016-5000-8a9c-51b10a19e897",
+      "symbol": "MS",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "3414bac1-f19d-5a5f-81dc-46235632dac1",
+      "symbol": "BLK",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "60d9f7f0-407e-5a47-85dd-f8d5f5dfe0d2",
+      "symbol": "V",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "ba9f9c7b-d67a-5d81-829f-df9537256f43",
+      "symbol": "MA",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "75509277-eb9c-55ec-8d55-10c15bb623e4",
+      "symbol": "UNH",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "579d4974-1854-5dd0-a0dc-5168c89a7427",
+      "symbol": "JNJ",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "552952da-ba3e-5ca4-94e0-64b9d77cd768",
+      "symbol": "PFE",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "88da8dd8-d01c-5f50-9c5c-38c195be3c69",
+      "symbol": "MRK",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "8d3b3f01-a748-5a16-a030-0a8c6de3f542",
+      "symbol": "ABBV",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "114b774b-a976-5789-9b9c-917c5c205258",
+      "symbol": "AMGN",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "772eb19f-4090-5ee3-b445-2e949ac3ed5e",
+      "symbol": "XOM",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "fc7ed47d-1f8b-5259-a1e2-1bbb9b113c66",
+      "symbol": "CVX",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "386f5a60-ac5b-509f-8540-ea763b8830cb",
+      "symbol": "COP",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "68eb5206-7542-505a-a908-dc5e5d1d1135",
+      "symbol": "SLB",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "cb0ee3c8-7555-5cbe-b3e5-159b2c870d12",
+      "symbol": "CAT",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "ce42b8e2-c29f-5a32-9ccc-37291212de3d",
+      "symbol": "DE",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "9cd692b0-49a6-52cc-b6fa-eb86e3507ce9",
+      "symbol": "HON",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "95065ee3-4b2f-5d10-a186-174ec7b79069",
+      "symbol": "UPS",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "21dc4809-81b3-58f4-a4c7-8af935760693",
+      "symbol": "UNP",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "9238b2c4-5b1e-5c13-a7e1-a44e8ff58c0f",
+      "symbol": "GE",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "00a59979-041d-59d0-9b68-99bc6b1809b1",
+      "symbol": "PG",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "715a1e51-1b1d-5a93-850c-6f15ee8d4ac1",
+      "symbol": "KO",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "894863ac-ce3c-5806-a4b1-4861b4523a5f",
+      "symbol": "PEP",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "2ffd0603-8e4c-5140-a9ff-a54ee29b31d8",
+      "symbol": "WMT",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "af522415-819d-50ed-a949-f3b3f169488f",
+      "symbol": "COST",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "d1cd19be-8908-5166-b945-073ff55a1191",
+      "symbol": "HD",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "1a15dca6-2f17-568b-aa8e-f426f5823a4d",
+      "symbol": "MCD",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "013202a0-8988-58fe-9cad-c2dcb36ac00b",
+      "symbol": "NKE",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "69ff25bc-19d1-5928-a015-72efa1f5ae23",
+      "symbol": "DIS",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "292d3425-722c-5a2e-aa0c-36bcb80508ae",
+      "symbol": "NEE",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "stock",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    },
+    {
+      "instrument_id": "e10ca533-9bb3-5634-9c53-46ccb07a8996",
+      "symbol": "SPY",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "kind": "benchmark",
+      "identity_scope": "fixed_symbol_unverified_historical_identity"
+    }
+  ]
+}
