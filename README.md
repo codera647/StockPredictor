@@ -7,7 +7,7 @@ Status: planning and configuration prepared. Application code, market-data backf
 - [Build and deployment plan](BUILD_PLAN.md)
 - [Dataset cleaning and feature specification](DATASET_FEATURE_PLAN.md)
 - [Environment variables and service ownership](ENVIRONMENT_VARIABLES.md)
-- [Blank environment template](.env.example)
+- [Environment template with fixed defaults](.env.example)
 
 Populate the private local `.env` manually. Configure the corresponding scoped GitHub Actions/Vercel settings before deployment. Never commit `.env` or credentials. The daily MVP uses free Alpaca historical data; macro/news/live integrations are later phases.
 

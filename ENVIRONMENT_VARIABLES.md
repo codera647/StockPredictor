@@ -1,13 +1,13 @@
 # Environment variables
 
-Status: planned configuration contract; application code does not exist yet. `.env` and `.env.example` contain the same 34 names with blank values. Populate `.env` privately; only `.env.example` may be committed. Names are deliberate project conventions except where noted as provider-standard. Additional provider-specific variables will be added only if the selected implementation requires them.
+Status: planned configuration contract; application code does not exist yet. `.env` and `.env.example` contain the same 34 names, with 18 fixed URLs/settings/project IDs prefilled. The 16 credential, contact and unselected-service entries remain blank. Populate `.env` privately; only `.env.example` may be committed. Names are deliberate project conventions except where noted as provider-standard. Additional provider-specific variables will be added only if the selected implementation requires them.
 
 ## Where values belong
 
 - Local development/testing: private root `.env`. Python jobs must explicitly load it; the future dashboard/API launchers must pass the appropriate subset into their processes. A root file is not automatically loaded by a Next.js application located in `dashboard/`.
 - GitHub Actions: protected environment/repository Secrets for credentials; Variables for non-secret URLs and IDs. Filling a local file does not configure Actions.
 - Vercel: each project's Production/Preview environment settings for its runtime subset. Filling a local file does not configure deployed functions. Preview uses separate data and credentials.
-- All values remain blank in the supplied files, including known endpoint URLs and project metadata, as requested. No real token is stored or uploaded.
+- Fixed provider endpoints, the explicit SIP daily feed, project IDs, CLI version and assigned Vercel domains are prefilled. Credentials remain blank in the supplied template. Never upload the private `.env` after entering real values.
 
 ## Collection variables
 
@@ -22,14 +22,14 @@ Status: planned configuration contract; application code does not exist yet. `.e
 | `SEC_ARCHIVE_BASE_URL` | Original filing archive: `https://www.sec.gov/Archives/edgar/data` | Filings extension | Actions Variables |
 | `SEC_TICKER_MAPPING_URL` | `https://www.sec.gov/files/company_tickers_exchange.json` | Identity mapping | Actions Variables |
 | `SEC_USER_AGENT` | Identifying application name and a valid contact email in the SEC-required User-Agent format | Any SEC collection | Actions configuration; contact value kept private |
-| `NASDAQ_LISTED_SYMBOLS_URL` | Nasdaq-listed symbol directory download address for `nasdaqlisted.txt` | Directory ingestion | Actions Variables |
-| `NASDAQ_OTHER_LISTED_SYMBOLS_URL` | Other-exchange symbol directory download address for `otherlisted.txt` | Directory ingestion | Actions Variables |
+| `NASDAQ_LISTED_SYMBOLS_URL` | `ftp://ftp.nasdaqtrader.com/symboldirectory/nasdaqlisted.txt` | Directory ingestion | Actions Variables |
+| `NASDAQ_OTHER_LISTED_SYMBOLS_URL` | `ftp://ftp.nasdaqtrader.com/symboldirectory/otherlisted.txt` | Directory ingestion | Actions Variables |
 | `FRED_API_KEY` | Free registered FRED API key | Macro extension only | Actions Secrets |
 | `FRED_API_BASE_URL` | `https://api.stlouisfed.org/fred` | Macro extension only | Actions Variables |
-| `GDELT_DOC_API_URL` | Document-search service URL from GDELT's current documentation | News extension only | Actions Variables |
-| `GDELT_GKG_BASE_URL` | Download base for GDELT GKG historical/incremental files | News extension only | Actions Variables |
+| `GDELT_DOC_API_URL` | `https://api.gdeltproject.org/api/v2/doc/doc` | News extension only | Actions Variables |
+| `GDELT_GKG_BASE_URL` | `https://data.gdeltproject.org/gdeltv2` | News extension only | Actions Variables |
 
-Nasdaq source definition: https://www.nasdaqtrader.com/trader.aspx?id=symboldirdefs . Preserve the full download URL, not a symbol-search webpage. Resolve the currently working documented transport during collector implementation. SEC, Nasdaq and GDELT do not require paid API keys for the planned public collection methods. The calendar library and public FinBERT artifact do not require a paid API key.
+Nasdaq source definition: https://www.nasdaqtrader.com/trader.aspx?id=symboldirdefs . Its documented public FTP file addresses are prefilled; the collector must support that transport. HTTPS requests to the FTP host timed out during setup, so they are not assumed to work. The GDELT archive HTTPS last-update endpoint responded successfully. SEC, Nasdaq and GDELT do not require paid API keys for the planned public collection methods. The calendar library and public FinBERT artifact do not require a paid API key. GDELT document-search reference: https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/ .
 
 ## Persistence variables
 
@@ -52,10 +52,10 @@ The daily Vercel API reads persisted forecasts and metrics from PostgreSQL. It d
 
 | Name | Purpose/value to supply | Required when | Destination |
 |---|---|---|---|
-| `NEXT_PUBLIC_APP_URL` | Dashboard's canonical HTTPS URL; public, never a credential | Deployed daily MVP | Vercel dashboard Config |
-| `API_BASE_URL` | FastAPI deployment's HTTPS origin; used by server-side dashboard requests | Deployed daily MVP | Vercel dashboard Config |
+| `NEXT_PUBLIC_APP_URL` | Assigned dashboard origin: `https://stock-predictor-beryl.vercel.app` | Deployed daily MVP | Vercel dashboard Config |
+| `API_BASE_URL` | Assigned API origin: `https://stock-predictor-api-virid.vercel.app`; used by server-side dashboard requests | Deployed daily MVP | Vercel dashboard Config |
 | `AUTH_SECRET` | Strong randomly generated application session-signing secret; planned shared verification contract between dashboard and API | Authenticated daily MVP | Vercel dashboard/API Secrets |
-| `ALLOWED_ORIGINS` | Explicit allowed dashboard/local origins, comma-separated; never an unrestricted wildcard with credentialed requests | API configuration | Vercel API Config |
+| `ALLOWED_ORIGINS` | Prefilled dashboard origin: `https://stock-predictor-beryl.vercel.app`; comma-separated if adding explicitly authorized local/preview origins | API configuration | Vercel API Config |
 
 Use the canonical app URL for redirects/session origin; do not introduce a second redundant auth URL until the chosen auth library requires it. Provider OAuth clients, email delivery and external identity-provider keys are not mandatory in the current plan. If selected, document their additional variables before integration. No paid LLM/API key is required for the forecasting MVP.
 
@@ -88,7 +88,7 @@ Leave later/conditional entries blank until enabled. The future config loader mu
 - Projects currently have no root-directory/framework configuration or deployments. Set `dashboard/` + Next.js and `backend/` + FastAPI when the runnable application is prepared.
 - No application, training run, model or live forecast has been deployed. This turn prepares configuration and project planning only.
 
-Verified non-secret values for manual configuration (the supplied `.env` remains unchanged):
+Verified non-secret values now prefilled in `.env` and `.env.example` (copy the applicable values into GitHub Actions Variables):
 
 | Name | Value |
 |---|---|
@@ -98,6 +98,17 @@ Verified non-secret values for manual configuration (the supplied `.env` remains
 | `VERCEL_CLI_VERSION` | `64.0.2` |
 
 CLI login authenticates this workstation. GitHub Actions still needs its own `VERCEL_TOKEN` stored directly in protected Actions Secrets; never copy or publish the CLI's credential file.
+
+Both Vercel domain records are verified and belong to the intended project IDs. These are assigned project domains, not evidence of a live application: no deployment exists yet. Change application origin values together if a custom domain is configured later.
+
+## Remaining blank values
+
+- Daily collection: `APCA_API_KEY_ID`, `APCA_API_SECRET_KEY`, `SEC_USER_AGENT`.
+- Database: `DATABASE_URL`, `DATABASE_WRITE_URL`, `DATABASE_MIGRATION_URL`.
+- Object storage: `S3_ENDPOINT_URL`, `S3_REGION`, `S3_BUCKET_NAME`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`.
+- Application signing: `AUTH_SECRET`.
+- Actions deployment: `VERCEL_TOKEN`.
+- Later/conditional: `FRED_API_KEY`, `VERCEL_AUTOMATION_BYPASS_SECRET`, `REDIS_URL`.
 
 References: [Vercel environments](https://vercel.com/docs/environment-variables), [Vercel CLI deployment](https://vercel.com/docs/cli/deploy), [Vercel FastAPI support](https://vercel.com/docs/frameworks/backend/fastapi), [GitHub workflow triggers](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow).
 

@@ -4,7 +4,7 @@ Status: planning only; implementation has not started.
 
 User decisions: daily forecasting MVP first, live intraday forecasts later; no paid data APIs. Build, train, test and deploy through one reproducible pipeline using the same code and artifacts. Prepare the plan before implementing.
 
-Deployment decision: Vercel production through GitHub Actions. New private repository: `codera647/StockPredictor`, initial branch `master`. Vercel projects created through authenticated CLI 64.0.2 in `codera647s-projects`: `stock-predictor` for the dashboard and `stock-predictor-api` for FastAPI. Both project owners and IDs were verified. Root directories, framework/build configuration and application deployment will be set with the runnable application; no deployment exists yet. Blank variable templates and the complete configuration contract are in [.env.example](.env.example) and [ENVIRONMENT_VARIABLES.md](ENVIRONMENT_VARIABLES.md); the private `.env` is gitignored.
+Deployment decision: Vercel production through GitHub Actions. New private repository: `codera647/StockPredictor`, initial branch `master`. Vercel projects created through authenticated CLI 64.0.2 in `codera647s-projects`: `stock-predictor` for the dashboard and `stock-predictor-api` for FastAPI. Both project owners and IDs were verified. Root directories, framework/build configuration and application deployment will be set with the runnable application; no deployment exists yet. Variable templates with fixed defaults and the complete configuration contract are in [.env.example](.env.example) and [ENVIRONMENT_VARIABLES.md](ENVIRONMENT_VARIABLES.md); the private `.env` is gitignored.
 
 ## Source documents
 
