@@ -1,0 +1,20 @@
+{
+  "provider": "neon",
+  "project_name": "StockPredictor",
+  "project_id": "hidden-butterfly-59546787",
+  "organization_id": "org-quiet-heart-25678049",
+  "plan_at_creation": "free",
+  "region_id": "aws-us-east-1",
+  "postgres_version": 17,
+  "branch_name": "production",
+  "branch_id": "br-lingering-shape-b8lz1937",
+  "database_name": "stock_predictor",
+  "roles": {
+    "DATABASE_URL": { "name": "app_runtime", "connection": "pooled" },
+    "DATABASE_WRITE_URL": { "name": "pipeline_writer", "connection": "pooled" },
+    "DATABASE_MIGRATION_URL": { "name": "schema_migrator", "connection": "direct" }
+  },
+  "application_schema_status": "not_implemented",
+  "credentials_location": "private .env; never commit credentials"
+}
+

@@ -1,6 +1,6 @@
 # Environment variables
 
-Status: planned configuration contract; application code does not exist yet. `.env` and `.env.example` contain the same 34 names, with 18 fixed URLs/settings/project IDs prefilled. The 16 credential, contact and unselected-service entries remain blank. Populate `.env` privately; only `.env.example` may be committed. Names are deliberate project conventions except where noted as provider-standard. Additional provider-specific variables will be added only if the selected implementation requires them.
+Status: configuration contract; application code does not exist yet. `.env` and `.env.example` contain the same 34 names, with 18 fixed URLs/settings/project IDs prefilled. The template's 16 credential/contact/service entries remain blank; the private `.env` now also contains the three verified Neon database connections. Other user-entered values are preserved. Only `.env.example` may be committed. Names are deliberate project conventions except where noted as provider-standard. Additional provider-specific variables will be added only if the selected implementation requires them.
 
 ## Where values belong
 
@@ -33,7 +33,11 @@ Nasdaq source definition: https://www.nasdaqtrader.com/trader.aspx?id=symboldird
 
 ## Persistence variables
 
-Choose external PostgreSQL and S3-compatible object storage with suitable free allowances before implementation. No provider is provisioned by this plan. Vercel function disk and Actions runner disk are not the durable data archive. Free allowance, account eligibility and data volume must be checked for the selected provider.
+Database provisioned through the Neon connector in the connected Free organization: StockPredictor (`hidden-butterfly-59546787`), AWS US East 1, PostgreSQL 17, branch `production` (`br-lingering-shape-b8lz1937`), database `stock_predictor`. Compute is capped at 0.25 CU with the Free plan's default suspension policy. One database has separate roles for runtime, pipeline writes and schema migrations. The private local `.env` now contains pooled runtime/writer connections and a direct migration connection, preserving Neon's TLS options. All three authenticated successfully against the expected role/database. Object-storage provider selection remains separate. Vercel function disk and Actions runner disk are not durable archives.
+
+Created SQL roles: `app_runtime` and `pipeline_writer`, with LOGIN but without superuser, CREATEDB, CREATEROLE, replication, BYPASSRLS or neon_superuser membership. They have database CONNECT and public-schema USAGE only. Their exact table grants will be added with the application schema: runtime forecasting/metric reads and permitted application-state operations, and pipeline ingestion/forecast writes. `schema_migrator` is the controlled administrative owner created with the project. The non-secret metadata and bootstrap SQL are in `infra/database/`; passwords are stored only in the private `.env`.
+
+For subsequent setup, reuse this project and branch and the existing private database URLs. The migration URL was retrieved through the connector; restricted-role passwords were securely generated, the roles were created with SQL, and their pooled URLs were built from the same verified endpoint. These three names are our project's conventions. Keep credentials in the private `.env` and the appropriate scoped Vercel/Actions Secrets; this local setup has not populated remote deployment secrets.
 
 | Name | Purpose/value to supply | Required when | Destination |
 |---|---|---|---|
@@ -101,10 +105,10 @@ CLI login authenticates this workstation. GitHub Actions still needs its own `VE
 
 Both Vercel domain records are verified and belong to the intended project IDs. These are assigned project domains, not evidence of a live application: no deployment exists yet. Change application origin values together if a custom domain is configured later.
 
-## Remaining blank values
+## User-specific values
 
 - Daily collection: `APCA_API_KEY_ID`, `APCA_API_SECRET_KEY`, `SEC_USER_AGENT`.
-- Database: `DATABASE_URL`, `DATABASE_WRITE_URL`, `DATABASE_MIGRATION_URL`.
+- Database: `DATABASE_URL`, `DATABASE_WRITE_URL`, `DATABASE_MIGRATION_URL` are configured and verified locally; keep these entries blank in the committed template.
 - Object storage: `S3_ENDPOINT_URL`, `S3_REGION`, `S3_BUCKET_NAME`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`.
 - Application signing: `AUTH_SECRET`.
 - Actions deployment: `VERCEL_TOKEN`.

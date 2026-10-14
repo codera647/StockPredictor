@@ -2,7 +2,7 @@
 
 Daily probabilistic equity forecasting with reproducible datasets, immutable forecasts, and Vercel deployment through GitHub Actions.
 
-Status: planning and configuration prepared. Application code, market-data backfill, training and deployment have not started.
+Status: planning/configuration prepared; Neon database and three local role-specific connections are provisioned and verified. Application code, application tables, market-data backfill, training and deployment have not started.
 
 - [Build and deployment plan](BUILD_PLAN.md)
 - [Dataset cleaning and feature specification](DATASET_FEATURE_PLAN.md)
