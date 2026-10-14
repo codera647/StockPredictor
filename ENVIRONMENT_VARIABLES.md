@@ -67,7 +67,7 @@ Use the canonical app URL for redirects/session origin; do not introduce a secon
 | `VERCEL_ORG_ID` | Vercel account/team ID owning both application projects | Deployment | Actions Variable |
 | `VERCEL_PROJECT_ID` | Dashboard Vercel project ID | Dashboard deployment | Actions Variable |
 | `VERCEL_API_PROJECT_ID` | FastAPI Vercel project ID; workflow maps it to `VERCEL_PROJECT_ID` for the API step | API deployment | Actions Variable |
-| `VERCEL_CLI_VERSION` | Reviewed exact CLI version pinned by the workflow | CI deployment tooling | Actions Variable |
+| `VERCEL_CLI_VERSION` | Exact CLI version pinned by the workflow; setup used `64.0.2` | CI deployment tooling | Actions Variable |
 | `VERCEL_AUTOMATION_BYPASS_SECRET` | Automation bypass secret for smoke tests against protected staged deployments, if protection is enabled | Conditional deployment verification | Protected Actions Secret only |
 
 These CI authentication values are not needed in the deployed application. The connected Codex plugins do not inject their credentials into GitHub Actions. Read IDs from project settings; never paste tokens into chat. `GITHUB_TOKEN`, `GITHUB_REPOSITORY`, `GITHUB_SHA` and runner context are supplied by Actions, so no GitHub personal access token is required by this pipeline and they are intentionally omitted from `.env`. Vercel-supplied runtime/system variables are also not manual configuration entries.
@@ -83,9 +83,21 @@ Leave later/conditional entries blank until enabled. The future config loader mu
 ## Current connector setup
 
 - GitHub repository created: `https://github.com/codera647/StockPredictor`, private, initial branch `master`.
-- Requested new Vercel projects: `stock-predictor` (dashboard) and `stock-predictor-api` (FastAPI), in `codera647s-projects`.
-- Vercel creation attempted through the connector; it returned HTTP 403 for insufficient access to that scope. Neither new Vercel project has been created or deployed.
+- New Vercel projects created and verified through CLI 64.0.2: `stock-predictor` (dashboard) and `stock-predictor-api` (FastAPI), in `codera647s-projects`.
+- The connector's creation attempt returned HTTP 403; successful CLI login provided the authorized creation path. CLI identity was verified as `codera647` in the intended Hobby team. This does not change the connector's separate credentials.
+- Projects currently have no root-directory/framework configuration or deployments. Set `dashboard/` + Next.js and `backend/` + FastAPI when the runnable application is prepared.
 - No application, training run, model or live forecast has been deployed. This turn prepares configuration and project planning only.
+
+Verified non-secret values for manual configuration (the supplied `.env` remains unchanged):
+
+| Name | Value |
+|---|---|
+| `VERCEL_ORG_ID` | `team_75Ikyytg6OGvW0iRj2fKq0Gg` |
+| `VERCEL_PROJECT_ID` | `prj_lxU7mZ6zcq4GWdfLpU3CsPJOOkhc` |
+| `VERCEL_API_PROJECT_ID` | `prj_ZiGiuZCVNKkCAyRzLjF5aCWwhSac` |
+| `VERCEL_CLI_VERSION` | `64.0.2` |
+
+CLI login authenticates this workstation. GitHub Actions still needs its own `VERCEL_TOKEN` stored directly in protected Actions Secrets; never copy or publish the CLI's credential file.
 
 References: [Vercel environments](https://vercel.com/docs/environment-variables), [Vercel CLI deployment](https://vercel.com/docs/cli/deploy), [Vercel FastAPI support](https://vercel.com/docs/frameworks/backend/fastapi), [GitHub workflow triggers](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow).
 
