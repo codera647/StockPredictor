@@ -12,6 +12,7 @@ Status: the Python pipeline extracts all planned source families and prepares th
 - [Measured prepared-dataset results](DATASET_PREPARATION_REPORT.md)
 - [Shared training commands and evaluation policy](MODEL_TRAINING.md)
 - [Measured trained-model results](MODEL_TRAINING_REPORT.md)
+- [Direction challenger comparison](DIRECTION_CHALLENGERS_REPORT.md)
 - [Environment variables and service ownership](ENVIRONMENT_VARIABLES.md)
 - [Environment template with fixed defaults](.env.example)
 

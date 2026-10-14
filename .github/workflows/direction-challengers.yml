@@ -1,0 +1,58 @@
+name: Compare daily direction challengers
+
+on:
+  workflow_dispatch:
+    inputs:
+      dataset_manifest:
+        description: Private prepared dataset manifest
+        required: true
+        default: manifests/dataset/20261014T171511441819Z.json
+      baseline_manifest:
+        description: Existing trained baseline manifest for the same dataset
+        required: true
+        default: manifests/training/20261014T195422207291Z.json
+
+permissions:
+  contents: read
+
+concurrency:
+  group: stock-predictor-daily-pipeline
+  cancel-in-progress: false
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.13'
+      - name: Install locked dependencies and verify implementation
+        run: |
+          python -m pip install uv==0.13.1
+          uv sync --frozen
+          uv run --frozen ruff check backend
+          uv run --frozen pytest -q
+      - name: Compare using earlier data only
+        env:
+          DATASET_MANIFEST: ${{ inputs.dataset_manifest }}
+          BASELINE_MANIFEST: ${{ inputs.baseline_manifest }}
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+          S3_ENDPOINT_URL: https://br-lingering-shape-b8lz1937.storage.c-14.us-east-1.aws.neon.tech
+          S3_REGION: us-east-1
+          S3_BUCKET_NAME: stock-predictor-artifacts
+          S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
+          S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+        run: uv run --frozen stock-predictor-challengers --manifest "$DATASET_MANIFEST" --baseline-manifest "$BASELINE_MANIFEST"
+      - name: Attach comparison report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: direction-challengers-${{ github.run_id }}
+          path: artifacts/challengers/*.json
+          if-no-files-found: ignore
+          retention-days: 30

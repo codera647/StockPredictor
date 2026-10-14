@@ -9,6 +9,8 @@ dependencies = [
   "scikit-learn>=1.7,<2",
   "scipy>=1.15,<2",
   "statsmodels>=0.14,<0.16",
+  "xgboost-cpu>=3.0,<4",
+  "catboost>=1.2.8,<2",
   "httpx>=0.28,<0.29",
   "boto3>=1.40,<2",
   "exchange-calendars>=4.11,<5",
@@ -19,6 +21,7 @@ dependencies = [
 
 [project.scripts]
 stock-predictor = "stock_predictor.cli:main"
+stock-predictor-challengers = "stock_predictor_challengers.pipeline:main"
 
 [dependency-groups]
 dev = ["pytest>=8,<10", "ruff>=0.13,<1"]
@@ -28,7 +31,7 @@ requires = ["hatchling>=1.27,<2"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["backend/src/stock_predictor"]
+packages = ["backend/src/stock_predictor", "backend/src/stock_predictor_challengers"]
 
 [tool.pytest.ini_options]
 testpaths = ["backend/tests"]

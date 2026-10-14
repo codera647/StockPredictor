@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "seed": 647,
+  "threads": 4,
+  "max_rounds": 400,
+  "early_stopping_rounds": 40,
+  "learning_rate": 0.04,
+  "xgboost_candidates": [
+    {"name": "compact", "max_depth": 3, "min_child_weight": 200, "reg_lambda": 10.0},
+    {"name": "moderate", "max_depth": 5, "min_child_weight": 100, "reg_lambda": 20.0}
+  ],
+  "catboost_candidates": [
+    {"name": "compact", "depth": 4, "l2_leaf_reg": 10.0},
+    {"name": "moderate", "depth": 6, "l2_leaf_reg": 20.0}
+  ],
+  "logistic_cs": [0.1, 1.0],
+  "walk_forward": [
+    {"inner_validation_start": "2020-07-01", "evaluation_start": "2021-01-04", "evaluation_end_exclusive": "2021-07-01"},
+    {"inner_validation_start": "2021-07-01", "evaluation_start": "2022-01-03", "evaluation_end_exclusive": "2022-07-01"}
+  ],
+  "selection_metric": "log_loss",
+  "minimum_relative_improvement": 0.01,
+  "production_ready": false,
+  "evaluate_existing_test": false
+}
