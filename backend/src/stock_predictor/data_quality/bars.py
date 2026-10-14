@@ -114,10 +114,10 @@ def coverage_report(frame: pd.DataFrame, universe: dict, session_dates: list[str
         missing = sorted(set(session_dates) - set(dates))
         revisions, duplicates = 0, 0
         if not rows.empty:
-            for _, group in rows.groupby("session_date", dropna=False):
-                unique = group["record_version"].nunique()
-                duplicates += len(group) - unique
-                revisions += max(0, unique - 1)
+            grouped = rows.groupby("session_date", dropna=False)["record_version"]
+            unique = grouped.nunique()
+            duplicates = int((grouped.size() - unique).sum())
+            revisions = int((unique - 1).clip(lower=0).sum())
         yearly = Counter(day[:4] for day in dates)
         coverage.append(
             {

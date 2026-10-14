@@ -7,8 +7,9 @@ from pathlib import Path
 
 from stock_predictor.calendar import latest_completed_session
 from stock_predictor.config import PipelineError, Settings, load_universe
+from stock_predictor.evidence import full_report, run_evidence
 from stock_predictor.extraction import run_extraction
-from stock_predictor.storage.archive import Archive
+from stock_predictor.storage.archive import Archive, digest
 
 
 def parser() -> argparse.ArgumentParser:
@@ -22,6 +23,12 @@ def parser() -> argparse.ArgumentParser:
     extract.add_argument("--universe", type=Path, default=Path("configs/universe.daily.json"))
     extract.add_argument("--symbols", help="Optional comma-separated subset of the frozen universe")
     extract.add_argument("--env-file", type=Path, default=Path(".env"))
+    extract.add_argument("--sources", choices=("all", "daily"), default="all")
+    extract.add_argument("--evidence-config", type=Path, default=Path("configs/evidence.json"))
+    extract.add_argument(
+        "--daily-manifest",
+        help="Reuse a completed private daily manifest instead of rebuilding it",
+    )
     extract.add_argument("--archive-root", type=Path, default=Path("data/archive"))
     extract.add_argument("--summary-dir", type=Path, default=Path("artifacts/extraction"))
     extract.add_argument("--no-upload", action="store_true", help="Explicit disk-only verification")
@@ -40,6 +47,11 @@ def main() -> int:
     # Third-party HTTP debug logging can disclose sensitive URLs/headers; keep it quiet.
     for name in ("httpx", "httpcore", "botocore", "boto3", "urllib3"):
         logging.getLogger(name).setLevel(logging.WARNING)
+    args.summary_dir.mkdir(parents=True, exist_ok=True)
+    (args.summary_dir / "summary.json").write_text(
+        json.dumps({"status": "running", "sources": args.sources, "training_ready": False}),
+        encoding="utf-8",
+    )
     try:
         settings = Settings.load(args.env_file, upload=not args.no_upload)
         logging.info("Extraction configuration loaded; credentials will not be logged")
@@ -47,15 +59,54 @@ def main() -> int:
         universe = load_universe(args.universe, selected)
         archive = Archive(args.archive_root, None if args.no_upload else settings)
         logging.info("Checking private archive access and requested session window")
-        result = run_extraction(
-            settings,
-            archive,
-            universe,
-            args.start,
-            args.end or latest_completed_session(),
-            refresh=args.refresh,
-            directories=not args.skip_directories,
-        )
+        if args.daily_manifest:
+            manifest_body = archive.read(args.daily_manifest)
+            if manifest_body is None:
+                raise PipelineError("Requested daily manifest is missing")
+            manifest = json.loads(manifest_body)
+            if manifest.get("status") not in ("complete", "complete_with_issues"):
+                raise PipelineError("Only completed daily extraction manifests can be reused")
+            report_ref = manifest["report"]
+            report = json.loads(archive.read(report_ref["key"], sha256=report_ref["sha256"]))
+            if selected and set(selected) != set(report["symbols"]):
+                raise PipelineError("Requested symbols differ from the frozen daily manifest")
+            args.start, args.end = (
+                date.fromisoformat(report["start"]),
+                date.fromisoformat(report["end"]),
+            )
+            result = {
+                "manifest": {
+                    "key": args.daily_manifest,
+                    "sha256": digest(manifest_body),
+                },
+                "report": report,
+                "report_ref": report_ref,
+            }
+            logging.info("Reusing verified daily manifest: %d bars", report["bar_rows"])
+        else:
+            result = run_extraction(
+                settings,
+                archive,
+                universe,
+                args.start,
+                args.end or latest_completed_session(),
+                refresh=args.refresh,
+                directories=not args.skip_directories,
+            )
+        if args.sources == "all":
+            universe_ref = result["report"]["outputs"]["universe"]
+            resolved = json.loads(archive.read(universe_ref["key"], sha256=universe_ref["sha256"]))
+            evidence_config = json.loads(args.evidence_config.read_text(encoding="utf-8"))
+            evidence = run_evidence(
+                settings,
+                archive,
+                resolved["instruments"],
+                evidence_config,
+                args.start,
+                args.end or latest_completed_session(),
+                refresh=args.refresh,
+            )
+            result = full_report(result, evidence, archive)
         args.summary_dir.mkdir(parents=True, exist_ok=True)
         (args.summary_dir / "report.json").write_text(
             json.dumps(result["report"], indent=2),
@@ -69,6 +120,12 @@ def main() -> int:
             "manifest": result["manifest"],
             "report": result["report_ref"],
             "training_ready": False,
+            "sources": args.sources,
+            "additional_rows": {
+                name: ref.get("rows", 0)
+                for name, ref in result["report"]["outputs"].items()
+                if name not in ("bars", "actions", "sessions", "universe")
+            },
         }
         (args.summary_dir / "summary.json").write_text(
             json.dumps(summary, indent=2), encoding="utf-8"

@@ -132,6 +132,7 @@ def run_extraction(
         raise
     finally:
         collector.close()
+    LOG.info("Creating staging tables and coverage report from %d archived bars", len(bar_data))
     frame = pd.DataFrame(bar_data)
     coverage = coverage_report(frame, universe_snapshot, list(sessions))
     required_issues = []

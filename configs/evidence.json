@@ -1,0 +1,489 @@
+{
+  "schema_version": 1,
+  "fred_series": [
+    "DFEDTARU",
+    "DFF",
+    "DGS10",
+    "DGS2",
+    "CPIAUCSL",
+    "UNRATE"
+  ],
+  "sec_documents_per_company": 6,
+  "news_lookback_days": 7,
+  "gdelt_gkg_partitions": 4,
+  "gdelt_max_doc_requests": 250,
+  "news_aliases": {
+    "AAPL": [
+      "Apple"
+    ],
+    "MSFT": [
+      "Microsoft"
+    ],
+    "NVDA": [
+      "NVIDIA"
+    ],
+    "AMZN": [
+      "Amazon"
+    ],
+    "GOOGL": [
+      "Alphabet"
+    ],
+    "TSLA": [
+      "Tesla"
+    ],
+    "AVGO": [
+      "Broadcom"
+    ],
+    "ORCL": [
+      "Oracle"
+    ],
+    "CRM": [
+      "Salesforce"
+    ],
+    "ADBE": [
+      "Adobe"
+    ],
+    "INTC": [
+      "Intel"
+    ],
+    "AMD": [
+      "Advanced Micro Devices"
+    ],
+    "CSCO": [
+      "Cisco"
+    ],
+    "IBM": [
+      "IBM"
+    ],
+    "QCOM": [
+      "Qualcomm"
+    ],
+    "TXN": [
+      "Texas Instruments"
+    ],
+    "JPM": [
+      "JPMorgan Chase"
+    ],
+    "BAC": [
+      "Bank of America"
+    ],
+    "WFC": [
+      "Wells Fargo"
+    ],
+    "GS": [
+      "Goldman Sachs"
+    ],
+    "MS": [
+      "Morgan Stanley"
+    ],
+    "BLK": [
+      "BlackRock"
+    ],
+    "V": [
+      "Visa"
+    ],
+    "MA": [
+      "Mastercard"
+    ],
+    "UNH": [
+      "UnitedHealth"
+    ],
+    "JNJ": [
+      "Johnson & Johnson"
+    ],
+    "PFE": [
+      "Pfizer"
+    ],
+    "MRK": [
+      "Merck"
+    ],
+    "ABBV": [
+      "AbbVie"
+    ],
+    "AMGN": [
+      "Amgen"
+    ],
+    "XOM": [
+      "ExxonMobil"
+    ],
+    "CVX": [
+      "Chevron"
+    ],
+    "COP": [
+      "ConocoPhillips"
+    ],
+    "SLB": [
+      "Schlumberger"
+    ],
+    "CAT": [
+      "Caterpillar"
+    ],
+    "DE": [
+      "Deere"
+    ],
+    "HON": [
+      "Honeywell"
+    ],
+    "UPS": [
+      "United Parcel Service"
+    ],
+    "UNP": [
+      "Union Pacific"
+    ],
+    "GE": [
+      "GE Aerospace"
+    ],
+    "PG": [
+      "Procter & Gamble"
+    ],
+    "KO": [
+      "Coca-Cola"
+    ],
+    "PEP": [
+      "PepsiCo"
+    ],
+    "WMT": [
+      "Walmart"
+    ],
+    "COST": [
+      "Costco"
+    ],
+    "HD": [
+      "Home Depot"
+    ],
+    "MCD": [
+      "McDonald's"
+    ],
+    "NKE": [
+      "Nike"
+    ],
+    "DIS": [
+      "Walt Disney"
+    ],
+    "NEE": [
+      "NextEra Energy"
+    ]
+  },
+  "company_sources": [
+    {
+      "symbol": "AAPL",
+      "url": "https://investor.apple.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "MSFT",
+      "url": "https://www.microsoft.com/en-us/Investor",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "NVDA",
+      "url": "https://investor.nvidia.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "AMZN",
+      "url": "https://ir.aboutamazon.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "GOOGL",
+      "url": "https://abc.xyz/investor/",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "TSLA",
+      "url": "https://ir.tesla.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "AVGO",
+      "url": "https://investors.broadcom.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "ORCL",
+      "url": "https://investor.oracle.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "CRM",
+      "url": "https://investor.salesforce.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "ADBE",
+      "url": "https://www.adobe.com/investor-relations.html",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "INTC",
+      "url": "https://www.intc.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "AMD",
+      "url": "https://ir.amd.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "CSCO",
+      "url": "https://investor.cisco.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "IBM",
+      "url": "https://www.ibm.com/investor",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "QCOM",
+      "url": "https://investor.qualcomm.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "TXN",
+      "url": "https://investor.ti.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "JPM",
+      "url": "https://www.jpmorganchase.com/ir",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "BAC",
+      "url": "https://investor.bankofamerica.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "WFC",
+      "url": "https://www.wellsfargo.com/about/investor-relations/",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "GS",
+      "url": "https://www.goldmansachs.com/investor-relations",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "MS",
+      "url": "https://www.morganstanley.com/about-us-ir",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "BLK",
+      "url": "https://ir.blackrock.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "V",
+      "url": "https://investor.visa.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "MA",
+      "url": "https://investor.mastercard.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "UNH",
+      "url": "https://www.unitedhealthgroup.com/investors.html",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "JNJ",
+      "url": "https://www.investor.jnj.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "PFE",
+      "url": "https://investors.pfizer.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "MRK",
+      "url": "https://www.merck.com/investor-relations/",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "ABBV",
+      "url": "https://investors.abbvie.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "AMGN",
+      "url": "https://investors.amgen.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "XOM",
+      "url": "https://investor.exxonmobil.com/earnings",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "CVX",
+      "url": "https://www.chevron.com/investors",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "COP",
+      "url": "https://www.conocophillips.com/investor-relations/",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "SLB",
+      "url": "https://investor.slb.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "CAT",
+      "url": "https://investors.caterpillar.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "DE",
+      "url": "https://investor.deere.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "HON",
+      "url": "https://investor.honeywell.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "UPS",
+      "url": "https://investors.ups.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "UNP",
+      "url": "https://investor.unionpacific.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "GE",
+      "url": "https://www.geaerospace.com/investor-relations",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "PG",
+      "url": "https://www.pginvestor.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "KO",
+      "url": "https://investors.coca-colacompany.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "PEP",
+      "url": "https://investors.pepsico.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "WMT",
+      "url": "https://stock.walmart.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "COST",
+      "url": "https://investor.costco.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "HD",
+      "url": "https://ir.homedepot.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "MCD",
+      "url": "https://corporate.mcdonalds.com/corpmcd/investors.html",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "NKE",
+      "url": "https://investors.nike.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "DIS",
+      "url": "https://thewaltdisneycompany.com/investor-relations/",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "NEE",
+      "url": "https://www.investor.nexteraenergy.com",
+      "kind": "page",
+      "verification_status": "candidate_official_IR_url_to_verify_on_collection"
+    },
+    {
+      "symbol": "AAPL",
+      "url": "https://www.apple.com/newsroom/rss-feed.rss",
+      "kind": "rss",
+      "verification_status": "official_public_feed"
+    },
+    {
+      "symbol": "NVDA",
+      "url": "https://nvidianews.nvidia.com/releases.xml",
+      "kind": "rss",
+      "verification_status": "official_public_feed"
+    }
+  ],
+  "coverage_policy": {
+    "prices_actions_and_SEC_metadata": "requested historical window",
+    "fred_alfred": "requested historical window plus 366-day observation warmup; revision validity dates retained",
+    "filing_documents": "latest 6 original primary documents per company; full filing metadata retained",
+    "gdelt_doc": "recent 7-day window with adaptive capped-window reporting",
+    "gdelt_gkg": "latest four 15-minute partitions; explicit history interval configurable separately",
+    "company_announcements": "prospective official-site/feed snapshots subject to robots policies; no reconstructed historical earnings calendar"
+  }
+}

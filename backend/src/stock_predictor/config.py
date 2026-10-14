@@ -44,6 +44,12 @@ class Settings:
     s3_bucket: str = ""
     s3_key: str = field(default="", repr=False)
     s3_secret: str = field(default="", repr=False)
+    sec_api_base: str = "https://data.sec.gov"
+    sec_archive_base: str = "https://www.sec.gov/Archives/edgar/data"
+    fred_base: str = "https://api.stlouisfed.org/fred"
+    fred_key: str = field(default="", repr=False)
+    gdelt_doc_url: str = "https://api.gdeltproject.org/api/v2/doc/doc"
+    gdelt_gkg_base: str = "https://data.gdeltproject.org/gdeltv2"
 
     @classmethod
     def load(cls, env_file: Path, *, upload: bool = True) -> "Settings":
@@ -83,6 +89,27 @@ class Settings:
                 os.environ.get("NASDAQ_OTHER_LISTED_SYMBOLS_URL", cls.nasdaq_other_url),
                 "NASDAQ_OTHER_LISTED_SYMBOLS_URL",
                 ("https", "ftp"),
+            ),
+            sec_api_base=safe_url(
+                os.environ.get("SEC_API_BASE_URL", cls.sec_api_base),
+                "SEC_API_BASE_URL",
+            ),
+            sec_archive_base=safe_url(
+                os.environ.get("SEC_ARCHIVE_BASE_URL", cls.sec_archive_base),
+                "SEC_ARCHIVE_BASE_URL",
+            ),
+            fred_base=safe_url(
+                os.environ.get("FRED_API_BASE_URL", cls.fred_base),
+                "FRED_API_BASE_URL",
+            ),
+            fred_key=os.environ.get("FRED_API_KEY", "").strip(),
+            gdelt_doc_url=safe_url(
+                os.environ.get("GDELT_DOC_API_URL", cls.gdelt_doc_url),
+                "GDELT_DOC_API_URL",
+            ),
+            gdelt_gkg_base=safe_url(
+                os.environ.get("GDELT_GKG_BASE_URL", cls.gdelt_gkg_base),
+                "GDELT_GKG_BASE_URL",
             ),
             **storage,
         )

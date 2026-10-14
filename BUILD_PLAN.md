@@ -1,6 +1,6 @@
 # Stock Predictor build plan
 
-Status: data extraction implementation started. The shared Python collector, locked dependencies, versioned engineering universe, private archives/checkpoints and manual GitHub Actions extraction workflow are implemented. See [DATA_EXTRACTION.md](DATA_EXTRACTION.md). Cleaning/features, database schema, training, application and deployment remain subsequent stages.
+Status: the shared extraction pipeline implements all planned free-source families: Alpaca, Nasdaq, SEC facts/filings, FRED/ALFRED, GDELT and official company announcements, with explicit per-source history windows and limits. Historical daily and evidence collection have run, with external news/IR gaps retained in reports. Locked dependencies, private archives/checkpoints, manifests/reports and the manual GitHub Actions workflow use the same code. See [DATA_EXTRACTION.md](DATA_EXTRACTION.md) and [measured collection results](DATA_COLLECTION_REPORT.md). Cleaning/features, database schema, training, application and deployment remain subsequent stages.
 
 User decisions: daily forecasting MVP first, live intraday forecasts later; no paid data APIs. Build, train, test and deploy through one reproducible pipeline using the same code and artifacts. Prepare the plan before implementing.
 

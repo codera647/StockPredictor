@@ -24,7 +24,7 @@ Status: configuration contract; application code does not exist yet. `.env` and 
 | `SEC_USER_AGENT` | Identifying application name and a valid contact email in the SEC-required User-Agent format | Any SEC collection | Actions configuration; contact value kept private |
 | `NASDAQ_LISTED_SYMBOLS_URL` | `ftp://ftp.nasdaqtrader.com/symboldirectory/nasdaqlisted.txt` | Directory ingestion | Actions Variables |
 | `NASDAQ_OTHER_LISTED_SYMBOLS_URL` | `ftp://ftp.nasdaqtrader.com/symboldirectory/otherlisted.txt` | Directory ingestion | Actions Variables |
-| `FRED_API_KEY` | Free registered FRED API key | Macro extension only | Actions Secrets |
+| `FRED_API_KEY` | Free registered FRED API key | Full-source extraction (`--sources all`); optional for daily-only extraction | Actions Secrets |
 | `FRED_API_BASE_URL` | `https://api.stlouisfed.org/fred` | Macro extension only | Actions Variables |
 | `GDELT_DOC_API_URL` | `https://api.gdeltproject.org/api/v2/doc/doc` | News extension only | Actions Variables |
 | `GDELT_GKG_BASE_URL` | `https://data.gdeltproject.org/gdeltv2` | News extension only | Actions Variables |
@@ -113,12 +113,11 @@ Both Vercel domain records are verified and belong to the intended project IDs. 
 
 ## User-specific values
 
-- Daily collection: `APCA_API_KEY_ID`, `APCA_API_SECRET_KEY`, `SEC_USER_AGENT`.
+- Daily collection: `APCA_API_KEY_ID`, `APCA_API_SECRET_KEY`, `SEC_USER_AGENT`. Full-source extraction also needs `FRED_API_KEY`.
 - Database: `DATABASE_URL`, `DATABASE_WRITE_URL`, `DATABASE_MIGRATION_URL` are configured and verified locally; keep these entries blank in the committed template.
 - Object storage: all five S3 variables are configured locally. The endpoint/region/bucket defaults are in the template; access-key ID and secret remain blank in the committed template.
 - Application signing: `AUTH_SECRET`.
 - Actions deployment: `VERCEL_TOKEN`.
-- Later/conditional: `FRED_API_KEY`, `VERCEL_AUTOMATION_BYPASS_SECRET`, `REDIS_URL`.
+- Later/conditional: `VERCEL_AUTOMATION_BYPASS_SECRET`, `REDIS_URL`. Macro features remain conditional, even though full extraction now archives FRED/ALFRED data.
 
 References: [Vercel environments](https://vercel.com/docs/environment-variables), [Vercel CLI deployment](https://vercel.com/docs/cli/deploy), [Vercel FastAPI support](https://vercel.com/docs/frameworks/backend/fastapi), [GitHub workflow triggers](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow).
-
