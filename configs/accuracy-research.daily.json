@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "seed": 647,
+  "threads": 4,
+  "target_accuracy": 0.9,
+  "evaluate_existing_test": false,
+  "production_ready": false,
+  "macro_feature_version": "daily-price-spy-alfred-vintage-v1",
+  "maximum_daily_macro_age_days": 10,
+  "maximum_monthly_macro_age_days": 90,
+  "logistic_cs": [0.1, 1.0],
+  "catboost": {"name": "macro", "depth": 4, "l2_leaf_reg": 10.0},
+  "max_rounds": 300,
+  "early_stopping_rounds": 30,
+  "learning_rate": 0.04,
+  "neural_hidden_layers": [64, 32],
+  "neural_alpha": 1.0,
+  "neural_learning_rate": 0.0005,
+  "neural_max_epochs": 40,
+  "neural_patience": 8,
+  "ensemble_weights": [
+    [1.0, 0.0, 0.0],
+    [0.0, 1.0, 0.0],
+    [0.0, 0.0, 1.0],
+    [0.5, 0.5, 0.0],
+    [0.5, 0.0, 0.5],
+    [0.5, 0.25, 0.25],
+    [0.3333333333333333, 0.3333333333333333, 0.3333333333333333]
+  ],
+  "calibration_split": "2025-04-14",
+  "confidence_thresholds": [0.0, 0.4, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 0.99],
+  "minimum_selective_examples": 200,
+  "minimum_selective_dates": 30,
+  "bootstrap_repetitions": 200,
+  "bootstrap_block_sessions": 20,
+  "walk_forward": [
+    {"inner_validation_start": "2020-07-01", "evaluation_start": "2021-01-04", "evaluation_end_exclusive": "2021-07-01"},
+    {"inner_validation_start": "2021-07-01", "evaluation_start": "2022-01-03", "evaluation_end_exclusive": "2022-07-01"}
+  ]
+}
