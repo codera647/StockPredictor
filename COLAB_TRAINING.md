@@ -97,6 +97,48 @@ model weights, predictions, histories, reports, config and hash records. Large s
 data and optimizer-resume checkpoints stay in Drive. Download the results ZIP when
 training finishes so it can be reviewed and integrated with this project.
 
+## Recover the original final-test export error
+
+The original notebook used `file` as a prediction-array name in `np.savez_compressed`.
+That conflicts with NumPy's destination argument and crashes after inference. New
+notebooks use `file_id`. Existing trained runs should **keep the original notebook
+source and Drive folder** so their frozen recipe and checkpoints remain usable.
+
+Replace the failed final-test cell with the code below in the existing notebook.
+It downloads only the recovery launcher, checks the four frozen weight/history
+hashes, reruns evaluation with an export-boundary fix and recomputes metrics.
+Training is explicitly disabled by the launcher. It does not modify package source,
+model weights, target definitions, config or the frozen holdout policy. Recovery
+provenance is recorded in `results/export_recovery.json` and the private archive.
+
+```python
+import subprocess
+import sys
+import urllib.request
+
+fix = WORK / "resume_colab_final_test.py"
+url = ("https://raw.githubusercontent.com/codera647/StockPredictor/master/"
+       "scripts/resume_colab_final_test.py")
+urllib.request.urlretrieve(url, fix)
+subprocess.run([
+    sys.executable, "-u", str(fix), "--config", str(config_path),
+    "--archive", str(ARCHIVE), "--downloads", str(DOWNLOADS),
+    "--output", str(RESULTS),
+], cwd=WORK, env=env, check=True)
+```
+
+The variables above already exist in the notebook before its failed evaluation
+cell. Keep the runtime connected if possible. Do not rerun the bundled-source
+installation cell from a newer notebook over an existing frozen study: its source
+hash will differ. If your runtime restarted, use the original saved notebook to
+restore its original code, mount the same Drive folder and recreate the variables;
+skip training and then run the recovery cell. The script refuses recovery without
+an existing frozen policy and refuses any attempted training.
+
+After recovery succeeds, run the existing results-table and export cells. Your
+evaluation restarts on the same frozen weights because the original crash occurred
+before a complete prediction/report artifact was committed.
+
 ## Rebuild the handoff
 
 ```powershell

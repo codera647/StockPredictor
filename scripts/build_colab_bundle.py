@@ -42,6 +42,7 @@ def source_files():
         "configs/lob.fi2010.json",
         "configs/lob.fi2010.colab.json",
         "notebooks/requirements-colab.txt",
+        "scripts/resume_colab_final_test.py",
     ]
     names.extend(
         p.relative_to(ROOT).as_posix()

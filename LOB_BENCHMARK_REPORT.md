@@ -16,3 +16,9 @@ workflow is provided but has not been dispatched. Colab results remain in your
 Drive until you download or transfer them.
 
 The daily forecasting bundle, daily holdout and Vercel deployment are unchanged.
+
+The user subsequently reported completing all four Colab training runs. Their final
+evaluation stopped at prediction serialization: a reserved `file` keyword collided
+with NumPy's output-file argument. The export key is corrected to `file_id`; an
+evaluation-only recovery launcher preserves the original frozen recipe and models.
+The user's weights and final scores have not been inspected in this workspace.

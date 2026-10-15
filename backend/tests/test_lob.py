@@ -1,3 +1,4 @@
+import importlib.util
 import io
 import json
 import zipfile
@@ -185,3 +186,90 @@ def test_colab_profile_requires_gpu_and_full_windows():
     validate(config)
     assert config["device"] == "cuda"
     assert config["training_stride"] == config["validation_stride"] == 1
+
+
+def test_final_export_and_legacy_recovery_never_retrain(tmp_path, monkeypatch):
+    from stock_predictor.storage.archive import Archive
+    from stock_predictor_lob import pipeline
+    from stock_predictor_lob.data import TRAIN_FILE
+    from stock_predictor_lob.training import metrics
+
+    source = tmp_path / "source.zip"
+    source.write_bytes(b"synthetic dataset fixture")
+    config = json.loads(Path("configs/lob.fi2010.json").read_text())
+    config_path = tmp_path / "config.json"
+    config_path.write_text(json.dumps(config))
+    archive = Archive(tmp_path / "archive")
+    output = tmp_path / "out"
+    downloads = tmp_path / "downloads"
+    x, y = arrays(5000)
+    test_x, test_y = arrays(230)
+
+    def prepare(_root, _zip, name, _sha):
+        return (x, y) if name == TRAIN_FILE else (test_x, test_y)
+
+    def fit(name, horizon, train, validation, config, directory, recipe, log):
+        return state_bytes(build_model(name)), {
+            "validation": metrics(
+                validation.targets, np.tile([0.3, 0.4, 0.3], (len(validation), 1))
+            ),
+            "epochs_completed": 1,
+            "best_epoch": 1,
+            "stop_reason": "fixture",
+            "elapsed_seconds": 0.0,
+            "train_class_counts": [50, 50, 50],
+        }
+
+    monkeypatch.setattr(pipeline, "prepare", prepare)
+    monkeypatch.setattr(pipeline, "download", lambda *_: (source, {"sha256": "fixture"}))
+    monkeypatch.setattr(pipeline, "fit", fit)
+    pipeline.run(config, archive, downloads, output, True)
+
+    # Simulate the original crash after checkpoint freezing, at the prediction export boundary.
+    original_save = np.savez_compressed
+
+    def legacy_export(destination, **arrays):
+        ids = arrays.pop("file_id")
+        return original_save(destination, file=ids, **arrays)
+
+    monkeypatch.setattr(np, "savez_compressed", legacy_export)
+    with pytest.raises(TypeError, match="multiple values for argument 'file'"):
+        pipeline.run(config, archive, downloads, output)
+    frozen_raw = archive.read(pipeline.POLICY_KEY)
+    assert frozen_raw is not None
+    monkeypatch.setattr(np, "savez_compressed", original_save)
+
+    def no_fit(*args, **kwargs):
+        pytest.fail("Final-test recovery attempted retraining")
+
+    monkeypatch.setattr(pipeline, "fit", no_fit)
+    actual_run = pipeline.run
+
+    def legacy_run(*args, **kwargs):
+        # Exercise the exact reserved-keyword call while the recovery shim is installed.
+        buffer = io.BytesIO()
+        np.savez_compressed(buffer, file=np.array([0, 1, 2]))
+        with np.load(io.BytesIO(buffer.getvalue()), allow_pickle=False) as saved:
+            np.testing.assert_array_equal(saved["file_id"], [0, 1, 2])
+        return actual_run(*args, **kwargs)
+
+    monkeypatch.setattr(pipeline, "run", legacy_run)
+    script = Path("scripts/resume_colab_final_test.py")
+    spec = importlib.util.spec_from_file_location("lob_test_recovery", script)
+    recovery = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(recovery)
+    result = recovery.resume(config_path, archive.root, downloads, output)
+    assert len(result["models"]) == 4
+    assert archive.read(pipeline.POLICY_KEY) == frozen_raw
+    report = json.loads((output / "report.json").read_text())
+    for model in report["models"].values():
+        raw = archive.read(model["predictions"]["key"], sha256=model["predictions"]["sha256"])
+        with np.load(io.BytesIO(raw), allow_pickle=False) as predictions:
+            assert "file_id" in predictions.files and "file" not in predictions.files
+            assert len(predictions["labels"]) == 93
+            np.testing.assert_array_equal(np.bincount(predictions["file_id"]), [31, 31, 31])
+    assert (output / "verification.json").exists()
+    assert np.savez_compressed is original_save and pipeline.fit is no_fit
+    assert (
+        json.loads((output / "export_recovery.json").read_text())["retraining_permitted"] is False
+    )

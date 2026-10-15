@@ -342,7 +342,7 @@ def run(config, archive, downloads, output, train_only=False):
             buffer,
             probabilities=p,
             labels=y,
-            file=np.concatenate(files),
+            file_id=np.concatenate(files),
             endpoint=np.concatenate(ends),
         )
         prediction_ref = store_blob(archive, "predictions", "npz", buffer.getvalue())
