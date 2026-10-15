@@ -17,6 +17,8 @@ Status: the Python pipeline extracts all planned source families and prepares th
 - [Measured accuracy research results](ACCURACY_RESEARCH_REPORT.md)
 - [SEC and historical-news experiment](FUNDAMENTAL_NEWS_EXPERIMENT.md)
 - [Measured SEC/news results](FUNDAMENTAL_NEWS_REPORT.md)
+- [FI-2010 DeepLOB/TransLOB research and Colab GPU training](LOB_BENCHMARK.md)
+- [Colab notebook and complete dataset instructions](COLAB_TRAINING.md)
 - [Environment variables and service ownership](ENVIRONMENT_VARIABLES.md)
 - [Environment template with fixed defaults](.env.example)
 

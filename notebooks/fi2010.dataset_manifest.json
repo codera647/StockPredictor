@@ -1,0 +1,50 @@
+{
+  "source_sha256": "7a5564290a504bdc104dccaf44aa6c0b3857bf1db6b0517b9b88577c2def3e5f",
+  "source_bytes": 56278154,
+  "source_bundle_sha256": "b1d315a442707f52e706253b38bbbe8027dc12d73b8f8163f8a42386883f241b",
+  "notebook_sha256": "decb1e6e361eaa1726f1fca8588c1c719eb15f0264167ef91216ff38c8a902e1",
+  "files": [
+    {
+      "file": "Test_Dst_NoAuction_DecPre_CF_7.txt",
+      "observations": 55478,
+      "source_rows": 149,
+      "uncompressed_bytes": 132259850
+    },
+    {
+      "file": "Test_Dst_NoAuction_DecPre_CF_9.txt",
+      "observations": 31937,
+      "source_rows": 149,
+      "uncompressed_bytes": 76138106
+    },
+    {
+      "file": "Test_Dst_NoAuction_DecPre_CF_8.txt",
+      "observations": 52172,
+      "source_rows": 149,
+      "uncompressed_bytes": 124378346
+    },
+    {
+      "file": "Train_Dst_NoAuction_DecPre_CF_7.txt",
+      "observations": 254750,
+      "source_rows": 149,
+      "uncompressed_bytes": 607324298
+    }
+  ],
+  "total_observations": 394337,
+  "feature_rows": 40,
+  "native_label_rows": 5,
+  "horizons": [
+    10,
+    20,
+    30,
+    50,
+    100
+  ],
+  "native_labels": {
+    "1": "UP",
+    "2": "FLAT",
+    "3": "DOWN"
+  },
+  "normalization": "provided decimal precision",
+  "credentials_included": false,
+  "training_executed": false
+}

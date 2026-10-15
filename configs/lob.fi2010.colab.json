@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "device": "cuda",
+  "source_sha256": "7a5564290a504bdc104dccaf44aa6c0b3857bf1db6b0517b9b88577c2def3e5f",
+  "architectures": ["deeplob", "translob"],
+  "horizons": [10, 100],
+  "window": 100,
+  "training_fraction": 0.8,
+  "purge_observations": 100,
+  "training_stride": 1,
+  "validation_stride": 1,
+  "test_stride": 1,
+  "batch_size": 128,
+  "max_epochs": 150,
+  "patience": 15,
+  "training_seconds_per_model": 5400,
+  "learning_rates": {"deeplob": 0.001, "translob": 0.0001},
+  "translob_hidden_l2": 0.0001,
+  "threads": 2,
+  "seed": 20261015,
+  "production_ready": false,
+  "protocol": "full_window_colab_gpu_comparison_not_exact_paper_reproduction"
+}
