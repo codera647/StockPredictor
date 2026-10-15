@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "dataset_sha256": "7a5564290a504bdc104dccaf44aa6c0b3857bf1db6b0517b9b88577c2def3e5f",
+  "horizon": 10,
+  "rows": 138990,
+  "row_alignment_sha256": "d27dc766018de39c7bb28f717535845284e3317acbd409e98b0f2acaa78d1b36",
+  "deep_lob_recipe": "b1c3d6bc6b975e4b79b540784a23fa19fc295f6e6054d2bfc0b4adc962f2d450",
+  "deep_lob_report_sha256": "9330b72e30eca5b5db37d8917c326c75d3fd4556ea7b744143397fe82851ff86",
+  "accuracy": 0.829412187927189,
+  "balanced_accuracy": 0.6809170464501729,
+  "macro_f1": 0.717199158992836,
+  "test_already_exposed": true
+}

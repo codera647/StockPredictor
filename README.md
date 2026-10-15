@@ -19,6 +19,8 @@ Status: the Python pipeline extracts all planned source families and prepares th
 - [Measured SEC/news results](FUNDAMENTAL_NEWS_REPORT.md)
 - [FI-2010 DeepLOB/TransLOB research and Colab GPU training](LOB_BENCHMARK.md)
 - [Colab notebook and complete dataset instructions](COLAB_TRAINING.md)
+- [Plain LSTM comparison and Colab notebook](LSTM_COMPARISON.md)
+- [Measured LSTM price check and naive baseline](LSTM_PRICE_CHECK_REPORT.md)
 - [Environment variables and service ownership](ENVIRONMENT_VARIABLES.md)
 - [Environment template with fixed defaults](.env.example)
 

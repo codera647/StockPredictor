@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "device": "cpu",
+  "seed": 1234,
+  "threads": 2,
+  "hidden": 128,
+  "dropout": 0.2,
+  "chunk": 5,
+  "learning_rate": 0.01,
+  "max_epochs": 300,
+  "patience": 30,
+  "validation_days": 30,
+  "test_days": 30,
+  "csv_sha256": "3667ef08ae4dac9e8048d3942c703319bda86298aed9060c19d9bb3d0259cfe6",
+  "upstream_revision": "33266732b0b16188b565e0aeb6b24efa71161f6a",
+  "production_ready": false
+}

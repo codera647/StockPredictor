@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "device": "cuda",
+  "seed": 20261025,
+  "threads": 2,
+  "hidden": 128,
+  "dropout": 0.2,
+  "window": 100,
+  "horizon": 10,
+  "batch_size": 128,
+  "learning_rate": 0.001,
+  "max_epochs": 150,
+  "patience": 15,
+  "training_seconds": 5400,
+  "training_stride": 1,
+  "validation_stride": 1,
+  "test_stride": 1,
+  "source_sha256": "7a5564290a504bdc104dccaf44aa6c0b3857bf1db6b0517b9b88577c2def3e5f",
+  "production_ready": false,
+  "test_already_exposed": true
+}
