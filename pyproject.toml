@@ -23,6 +23,7 @@ dependencies = [
 stock-predictor = "stock_predictor.cli:main"
 stock-predictor-challengers = "stock_predictor_challengers.pipeline:main"
 stock-predictor-research = "stock_predictor_research.pipeline:main"
+stock-predictor-fundamental-news = "stock_predictor_fundamental_news.pipeline:main"
 
 [dependency-groups]
 dev = ["pytest>=8,<10", "ruff>=0.13,<1"]
@@ -32,7 +33,7 @@ requires = ["hatchling>=1.27,<2"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["backend/src/stock_predictor", "backend/src/stock_predictor_challengers", "backend/src/stock_predictor_research"]
+packages = ["backend/src/stock_predictor", "backend/src/stock_predictor_challengers", "backend/src/stock_predictor_research", "backend/src/stock_predictor_fundamental_news"]
 
 [tool.pytest.ini_options]
 testpaths = ["backend/tests"]
